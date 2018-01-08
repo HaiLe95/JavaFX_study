@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -16,10 +17,11 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
-public class MainController {
-
-
+public class MainController implements Initializable {
 
     @FXML
     private Button mainAddButton;
@@ -54,62 +56,13 @@ public class MainController {
     private FXMLLoader fxmlLoaderD = new FXMLLoader();
     private DeleteController deleteController;
     private EditController editController;
+    private ResourceBundle resourceBundle;
 
     public void setMainStage(Stage mainStage) { this.mainStage = mainStage; }
 
 
-    private void initListeners() {
-
-        //Когда происходит изменение в коллекции addressBook то выполяется действие updateUserAmounts
-        addressBook.getContacts().addListener(new ListChangeListener<Contact>() {
-            @Override
-            public void onChanged(Change<? extends Contact> c) {
-                updateUserAmounts();
-            }
-        });
-
-        mainCallView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            //Если мы клацаем на таблицу callView 2 раза, открывается редактирование
-            @Override
-            public void handle(MouseEvent event) {
-                if(event.getClickCount() == 2) {
-                    editController.setContact((Contact)mainCallView.getSelectionModel().getSelectedItem());
-//                    showDialog();
-                }
-            }
-        });
-    }
-
-    @FXML
-    private void initialize() {
-        //Связывание столбцов по Contact, по его полю name ect
-        columnName.setCellValueFactory(new PropertyValueFactory<Contact, String>("name"));
-        columnComment.setCellValueFactory(new PropertyValueFactory<Contact, String>("commentary"));
-        columnTel.setCellValueFactory(new PropertyValueFactory<Contact, String>("telephoneNumber"));
-
-        initListeners();
-
-        addressBook.fillAddressBook();
-
-        mainCallView.setItems(addressBook.getContacts());
-
-        try {
-            //Присвоение через fxml ссылки на контроллер для подальших манипуляций
-            fxmlLoader.setLocation(getClass().getResource("/contactBook/fxml/edit.fxml"));
-            fxmlEdit = fxmlLoader.load();
-            editController = fxmlLoader.getController();
-
-            fxmlLoaderD.setLocation(getClass().getResource("/contactBook/fxml/delete.fxml"));
-            fxmlDelete = fxmlLoaderD.load();
-            deleteController = fxmlLoaderD.getController();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
     private void updateUserAmounts() {
-        mainUsersAmount.setText("Количество записей: " + addressBook.size());
+        mainUsersAmount.setText(resourceBundle.getString("key.label.usersAmount")+ addressBook.size());
     }
 
     public void actionButtonPressed(ActionEvent event) {
@@ -159,7 +112,8 @@ public class MainController {
     private void showDelete() {
         if (deleteDialog == null) {
             deleteDialog = new Stage();
-            deleteDialog.setTitle("Удаление записи");
+            deleteDialog.setTitle(resourceBundle.getString("key.delete"));
+//            deleteDialog.setTitle("Удаление");
             deleteDialog.setMinWidth(300);
             deleteDialog.setMinHeight(80);
             deleteDialog.setResizable(false);
@@ -174,7 +128,8 @@ public class MainController {
     private void showDialog() {
         if(editDialogStage == null) {
             editDialogStage = new Stage();
-            editDialogStage.setTitle("Редактирование записи");
+            editDialogStage.setTitle(resourceBundle.getString("key.update"));
+//            editDialogStage.setTitle("Редактирование");
             editDialogStage.setMinHeight(185);
             editDialogStage.setMinWidth(400);
             editDialogStage.setResizable(false);
@@ -184,6 +139,61 @@ public class MainController {
         }
 
         editDialogStage.showAndWait();
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        this.resourceBundle = resources;
+//    Связывание столбцов по Contact, по его полю name ect
+        columnName.setCellValueFactory(new PropertyValueFactory<Contact, String>("name"));
+        columnComment.setCellValueFactory(new PropertyValueFactory<Contact, String>("commentary"));
+        columnTel.setCellValueFactory(new PropertyValueFactory<Contact, String>("telephoneNumber"));
+
+        initListeners();
+        fillData();
+        fxmlLoad();
+    }
+
+    private void fxmlLoad() {
+        try {
+            //Присвоение через fxml ссылки на контроллер для подальших манипуляций
+            fxmlLoader.setLocation(getClass().getResource("/contactBook/fxml/edit.fxml"));
+            fxmlLoader.setResources(ResourceBundle.getBundle("contactBook/bundles/Locale", new Locale("en")));
+            fxmlEdit = fxmlLoader.load();
+            editController = fxmlLoader.getController();
+
+            fxmlLoaderD.setLocation(getClass().getResource("/contactBook/fxml/delete.fxml"));
+            fxmlLoaderD.setResources(ResourceBundle.getBundle("contactBook/bundles/Locale", new Locale("en")));
+            fxmlDelete = fxmlLoaderD.load();
+            deleteController = fxmlLoaderD.getController();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void fillData() {
+        addressBook.fillAddressBook();
+        mainCallView.setItems(addressBook.getContacts());
+    }
+    private void initListeners() {
+
+        //Когда происходит изменение в коллекции addressBook то выполяется действие updateUserAmounts
+        addressBook.getContacts().addListener(new ListChangeListener<Contact>() {
+            @Override
+            public void onChanged(Change<? extends Contact> c) {
+                updateUserAmounts();
+            }
+        });
+
+        mainCallView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            //Если мы клацаем на таблицу callView 2 раза, открывается редактирование
+            @Override
+            public void handle(MouseEvent event) {
+                if(event.getClickCount() == 2) {
+                    editController.setContact((Contact)mainCallView.getSelectionModel().getSelectedItem());
+                    showDialog();
+                }
+            }
+        });
     }
 
 }

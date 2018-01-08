@@ -11,12 +11,12 @@
    <left>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="ФИО">
+            <Label text="%key.name">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </Label>
-            <Label text="Телефон">
+            <Label text="%key.phone.number">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="15.0" />
                </VBox.margin>
@@ -49,12 +49,12 @@
    <right>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="modalOkButton" defaultButton="true" mnemonicParsing="false" onAction="#actionSave" prefHeight="25.0" prefWidth="60.0" text="Ок">
+            <Button fx:id="modalOkButton" defaultButton="true" mnemonicParsing="false" onAction="#actionSave" prefHeight="25.0" prefWidth="60.0" text="OK">
                <VBox.margin>
                   <Insets bottom="5.0" left="25.0" right="5.0" top="5.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="modalCancelButton" cancelButton="true" mnemonicParsing="false" onAction="#actionClose" prefHeight="25.0" prefWidth="60.0" text="Отмена">
+            <Button fx:id="modalCancelButton" cancelButton="true" mnemonicParsing="false" onAction="#actionClose" prefHeight="25.0" prefWidth="60.0" text="%key.btn.cancel">
                <VBox.margin>
                   <Insets bottom="5.0" left="25.0" right="5.0" top="5.0" />
                </VBox.margin>
@@ -68,7 +68,7 @@
    <bottom>
       <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="81.0" prefWidth="400.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="modalCommentaryTextField" alignment="TOP_LEFT" layoutX="28.0" layoutY="16.0" prefHeight="58.0" prefWidth="360.0" promptText="Комментарий..." AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+            <TextField fx:id="modalCommentaryTextField" alignment="TOP_LEFT" layoutX="28.0" layoutY="16.0" prefHeight="58.0" prefWidth="360.0" promptText="%key.commentary" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
          </children>
          <BorderPane.margin>
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

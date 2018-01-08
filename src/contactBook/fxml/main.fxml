@@ -13,17 +13,17 @@
    <children>
       <HBox maxHeight="51.0" prefHeight="0.0" prefWidth="370.0">
          <children>
-            <Button fx:id="mainAddButton" mnemonicParsing="false" onAction="#actionButtonPressed" text="Добавить">
+            <Button fx:id="mainAddButton" mnemonicParsing="false" onAction="#actionButtonPressed" text="%key.btn.add">
                <HBox.margin>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="mainChangeButton" mnemonicParsing="false" onAction="#actionButtonPressed" text="Изменить">
+            <Button fx:id="mainChangeButton" mnemonicParsing="false" onAction="#actionButtonPressed" text="%key.btn.change">
                <HBox.margin>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="mainDeleteButton" mnemonicParsing="false" onAction="#actionButtonPressed" text="Удалить">
+            <Button fx:id="mainDeleteButton" mnemonicParsing="false" onAction="#actionButtonPressed" text="%key.btn.delete">
                <HBox.margin>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </HBox.margin>
@@ -33,7 +33,7 @@
       <AnchorPane maxHeight="50.0" prefHeight="0.0" prefWidth="330.0">
          <children>
             <TextField fx:id="mainFindTextField" prefHeight="14.0" prefWidth="249.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="81.0" />
-            <Button fx:id="mainFindButton" layoutX="278.0" mnemonicParsing="false" text="Поиск" AnchorPane.rightAnchor="0.0" />
+            <Button fx:id="mainFindButton" layoutX="278.0" mnemonicParsing="false" text="%key.btn.search" AnchorPane.rightAnchor="0.0" />
          </children>
          <VBox.margin>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -43,9 +43,9 @@
          <children>
             <TableView fx:id="mainCallView" prefHeight="169.0" prefWidth="341.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
-                <TableColumn fx:id="columnName" prefWidth="75.0" text="ФИО" />
-                <TableColumn fx:id="columnTel" prefWidth="122.0" text="Телефон" />
-                  <TableColumn fx:id="columnComment" prefWidth="131.0" text="Комментарий" />
+                <TableColumn fx:id="columnName" prefWidth="75.0" text="%key.name" />
+                <TableColumn fx:id="columnTel" prefWidth="122.0" text="%key.phone.number" />
+                  <TableColumn fx:id="columnComment" prefWidth="131.0" text="%key.commentary" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -58,7 +58,7 @@
       </AnchorPane>
       <AnchorPane>
          <children>
-            <Label fx:id="mainUsersAmount" text="Количество записей :" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+            <Label fx:id="mainUsersAmount" text="%key.label.usersAmount" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
                <padding>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </padding></Label>

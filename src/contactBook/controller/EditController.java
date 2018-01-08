@@ -3,12 +3,16 @@ package contactBook.controller;
 import contactBook.objects.Contact;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class EditController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class EditController implements Initializable {
     @FXML
     private Button modalOkButton;
     @FXML
@@ -21,6 +25,13 @@ public class EditController {
     private TextField modalCommentaryTextField;
 
     private Contact contact;
+
+    private ResourceBundle resourceBundle;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        this.resourceBundle = resources;
+    }
 
     public void actionClose(ActionEvent event) {
         //Так как у нас всего одно модальное окно, можно его скрыть, но если понадобится закрыть используй метот close()
@@ -44,7 +55,7 @@ public class EditController {
             contact.setTelephoneNumber(l.toString());
         } catch (Exception e) {
             e.printStackTrace();
-            modalNumberTextField.setText("Ошибка ввода номера!");
+            modalNumberTextField.setText(resourceBundle.getString("key.txt.error"));
             return;
         }
         actionClose(event);

@@ -9,8 +9,8 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="contactBook.controller.DeleteController">
    <children>
-      <Label layoutX="35.0" layoutY="14.0" text="Вы действительно хотите удалить запись?" />
-      <Button fx:id="btnYes" layoutX="150.0" layoutY="45.0" mnemonicParsing="false" onAction="#actionYes" text="Да" />
-      <Button fx:id="btnCancel" layoutX="207.0" layoutY="45.0" mnemonicParsing="false" onAction="#actionCancel" text="Отмена" />
+      <Label layoutX="35.0" layoutY="14.0" text="%key.dlt.Question" />
+      <Button fx:id="btnYes" layoutX="150.0" layoutY="45.0" mnemonicParsing="false" onAction="#actionYes" text="%key.btn.yes" />
+      <Button fx:id="btnCancel" layoutX="207.0" layoutY="45.0" mnemonicParsing="false" onAction="#actionCancel" text="%key.btn.cancel" />
    </children>
 </Pane>
