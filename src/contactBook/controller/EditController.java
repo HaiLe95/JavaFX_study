@@ -37,7 +37,6 @@ public class EditController implements Initializable {
         //Так как у нас всего одно модальное окно, можно его скрыть, но если понадобится закрыть используй метот close()
         Node source = (Node)event.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
-//        stage.hide();
         stage.close();
     }
 
@@ -48,16 +47,8 @@ public class EditController implements Initializable {
 
     public void actionSave(ActionEvent event) {
         contact.setName(modalNameTextField.getText());
+        contact.setTelephoneNumber(modalNumberTextField.getText());
         contact.setCommentary(modalCommentaryTextField.getText());
-        String s = modalNumberTextField.getText();
-        try {
-            Long l = Long.parseLong(s);
-            contact.setTelephoneNumber(l.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            modalNumberTextField.setText(resourceBundle.getString("key.txt.error"));
-            return;
-        }
         actionClose(event);
 
     }

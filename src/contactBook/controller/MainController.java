@@ -2,7 +2,10 @@ package contactBook.controller;
 
 import contactBook.interfaces.impls.CollectionAddressBook;
 import contactBook.objects.Contact;
+import javafx.beans.property.ObjectProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -15,8 +18,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.controlsfx.control.textfield.CustomTextField;
+import org.controlsfx.control.textfield.TextFields;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -32,7 +38,7 @@ public class MainController implements Initializable {
     @FXML
     private Button mainFindButton;
     @FXML
-    private TextField mainFindTextField;
+    private CustomTextField txtSearch;
     @FXML
     private TableView mainCallView;
     @FXML
@@ -57,6 +63,7 @@ public class MainController implements Initializable {
     private DeleteController deleteController;
     private EditController editController;
     private ResourceBundle resourceBundle;
+    private ObservableList<Contact> backList;
 
     public void setMainStage(Stage mainStage) { this.mainStage = mainStage; }
 
@@ -80,11 +87,13 @@ public class MainController implements Initializable {
 
             case "mainAddButton":
                 editController.setContact(new Contact());
-                showDialog();
+                showEdit();
                 if(editController.getContact().getName().equals("") && editController.getContact().getTelephoneNumber().equals("")) {
                     return;
                 }
                 addressBook.add(editController.getContact());
+                backList.clear();
+                backList.addAll(addressBook.getContacts());
                 break;
 
             case "mainChangeButton":
@@ -92,7 +101,9 @@ public class MainController implements Initializable {
                     break;
                 }
                 editController.setContact((Contact) mainCallView.getSelectionModel().getSelectedItem());
-                showDialog();
+                showEdit();
+                backList.clear();
+                backList.addAll(addressBook.getContacts());
                 break;
 
             case "mainDeleteButton":
@@ -109,11 +120,21 @@ public class MainController implements Initializable {
         }
     }
 
+    public void actionButtonSearch (ActionEvent event) {
+        addressBook.getContacts().clear();
+
+        for(Contact contact : backList) {
+            if (contact.getName().toLowerCase().contains(txtSearch.getText().toLowerCase()) |
+                    contact.getTelephoneNumber().contains(txtSearch.getText())) {
+                addressBook.getContacts().add(contact);
+            }
+        }
+    }
+
     private void showDelete() {
         if (deleteDialog == null) {
             deleteDialog = new Stage();
             deleteDialog.setTitle(resourceBundle.getString("key.delete"));
-//            deleteDialog.setTitle("Удаление");
             deleteDialog.setMinWidth(300);
             deleteDialog.setMinHeight(80);
             deleteDialog.setResizable(false);
@@ -125,11 +146,10 @@ public class MainController implements Initializable {
     }
 
 
-    private void showDialog() {
+    private void showEdit() {
         if(editDialogStage == null) {
             editDialogStage = new Stage();
             editDialogStage.setTitle(resourceBundle.getString("key.update"));
-//            editDialogStage.setTitle("Редактирование");
             editDialogStage.setMinHeight(185);
             editDialogStage.setMinWidth(400);
             editDialogStage.setResizable(false);
@@ -148,12 +168,21 @@ public class MainController implements Initializable {
         columnName.setCellValueFactory(new PropertyValueFactory<Contact, String>("name"));
         columnComment.setCellValueFactory(new PropertyValueFactory<Contact, String>("commentary"));
         columnTel.setCellValueFactory(new PropertyValueFactory<Contact, String>("telephoneNumber"));
-
+        setupClearButtonField(txtSearch);
         initListeners();
         fillData();
         fxmlLoad();
     }
 
+    private void setupClearButtonField(CustomTextField customTextField) {
+        try {
+            Method m = TextFields.class.getDeclaredMethod("setupClearButtonField", TextField.class, ObjectProperty.class);
+            m.setAccessible(true);
+            m.invoke(null, customTextField, customTextField.rightProperty());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     private void fxmlLoad() {
         try {
             //Присвоение через fxml ссылки на контроллер для подальших манипуляций
@@ -170,8 +199,10 @@ public class MainController implements Initializable {
             e.printStackTrace();
         }
     }
-    public void fillData() {
+    private void fillData() {
         addressBook.fillAddressBook();
+        backList = FXCollections.observableArrayList();
+        backList.addAll(addressBook.getContacts());
         mainCallView.setItems(addressBook.getContacts());
     }
     private void initListeners() {
@@ -190,7 +221,7 @@ public class MainController implements Initializable {
             public void handle(MouseEvent event) {
                 if(event.getClickCount() == 2) {
                     editController.setContact((Contact)mainCallView.getSelectionModel().getSelectedItem());
-                    showDialog();
+                    showEdit();
                 }
             }
         });
