@@ -1,4 +1,4 @@
-package contactBook.start;
+package contactBook.gui.start;
 
 import contactBook.controller.MainController;
 import javafx.application.Application;

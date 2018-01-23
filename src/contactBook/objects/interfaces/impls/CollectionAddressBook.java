@@ -1,6 +1,6 @@
-package contactBook.interfaces.impls;
+package contactBook.objects.interfaces.impls;
 
-import contactBook.interfaces.Editable;
+import contactBook.objects.interfaces.Editable;
 import contactBook.objects.Contact;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

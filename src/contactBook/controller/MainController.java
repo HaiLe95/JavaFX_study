@@ -1,6 +1,6 @@
 package contactBook.controller;
 
-import contactBook.interfaces.impls.CollectionAddressBook;
+import contactBook.objects.interfaces.impls.CollectionAddressBook;
 import contactBook.objects.Contact;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;

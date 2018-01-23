@@ -1,4 +1,4 @@
-package contactBook.interfaces;
+package contactBook.objects.interfaces;
 
 import contactBook.objects.Contact;
 
